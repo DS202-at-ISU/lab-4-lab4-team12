@@ -85,10 +85,10 @@ head(add_hof)
 # adding new data to old HallOfFame from Lahman
 new_hof <- full_join(add_hof, HallOfFame, by = c("playerID", "yearID"))
 
-# ordering the yearID from newest to oldest (to show our additions)
+# ordering the yearID from newest (added 2023 players) to oldest
 new_hof <- new_hof[order(new_hof$yearID, decreasing = TRUE),]
 
-new_hof
+head(new_hof)
 
 # creating csv
 write.csv(new_hof, file="HallOfFame.csv", row.names = FALSE)

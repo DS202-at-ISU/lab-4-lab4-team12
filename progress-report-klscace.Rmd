@@ -1,0 +1,16 @@
+---
+title: "progress-report-klscace"
+author: "Kendra Scace"
+date: "2023-11-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I did struggle when it came to combining the datasets, but one of my teammates
+pushed their code and I was able to see where I was going wrong.
+
+I contributed more comments to the code, as well as helped to explain the graph
+in more detail.

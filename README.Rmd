@@ -7,6 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+install.packages("Lahman")
 library(Lahman)
 ```
 
@@ -60,8 +61,6 @@ add_hof <- add_hof %>%
 ```
 
 
-
-
 ```{r}
 # Preparing add_hof for joining with People from Lahman set
 add_hof <- add_hof %>% 
@@ -94,6 +93,18 @@ head(new_hof)
 write.csv(new_hof, file="HallOfFame.csv", row.names = FALSE)
 
 ```
+
+
+```{r}
+##Making the plot for the hall of fame data for the year 2023. 
+HallOfFame %>%
+  ggplot(aes (x = yearID, fill = inducted)) + 
+  geom_bar() + 
+  xlim(c(1936, 2022))
+```
+
+From the graph, we can see that we see that the highest number of players inducted into the HOF is around the year 2012 - 2013. 
+
 
 
 

@@ -1,0 +1,15 @@
+---
+title: "Progress Report"
+author: "David Szczepanik"
+date: "2023-11-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+I followed along with the instruction from the lab with no problem. I was able to scrape the data using the rvest package and clean the data. However, I liked the way a labmate had done it better than I did, so I did not overwrite their work. No issue with creating the ggplot either. 
+
+No issues using parse_number and gsub with the dataset either. The instructions were clear enough to give enough context on how to use them.
+
+I did want to note that using rbind gave me a little bit of trouble, but a labmate had joined the data together using inner_join and full_join, which I felt was a better way to do it.

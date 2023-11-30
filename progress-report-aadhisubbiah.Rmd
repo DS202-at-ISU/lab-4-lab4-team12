@@ -1,0 +1,18 @@
+---
+title: "progress-report-aadhisubbiah"
+author: "Aadhi Subbiah"
+date: "2023-11-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The first issue I had was that I was trying to work with a table instead of a dataframe. I first had to convert the table from the web-scraping to a dataframe in order to begin cleaning and joining things. 
+
+I then edited the scraped data to better be suited for joining by changing variable types and column names, as well as adding a year column. 
+
+I then pulled playerIDs from the People data set in order to set up the final joing with the existing HOF dataset. 
+
+I finally converted it into a csv file. 

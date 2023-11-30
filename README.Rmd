@@ -7,6 +7,8 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+install.packages("Lahman")
+library(Lahman)
 ```
 
 # Lab report #4 - instructions
@@ -17,15 +19,110 @@ All submissions to the github repo will be automatically uploaded for grading on
 
 # Lab 4: Scraping (into) the Hall of Fame
 
+```{r}
+# Scraping pulled from the lab manual
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-hof <- Lahman::HallOfFame
-hof %>% 
-  ggplot(aes(x = yearID, y = votes/needed*100, group=playerID)) +
-  geom_hline(yintercept = 100, colour="grey70") + 
-  geom_line() +
-  geom_point(aes(colour = "inducted"), 
-    data = hof %>% filter(inducted=="Y")) +
-  xlim(c(2000, 2022)) +
-  ylab("Percent of votes")
+library(rvest)
+url <- "https://www.baseball-reference.com/awards/hof_2023.shtml"
+html <- read_html(url)
+tables <- html_table(html)
+
+# showing the head of the original tables
+
+head(tables[[1]], 3)
 ```
+```{r}
+# Creating column names pulled from the lab manual
+write.csv(tables[[1]], "temp.csv", row.names=FALSE)
+add_hof <- readr::read_csv("temp.csv", skip = 1, show_col_types =FALSE)
+
+# Making table into an identical dataframe to work with
+add_hof <- data.frame(rbind(add_hof))
+colnames(add_hof)[5] <- "%.vote"
+
+#showing the head of the new dataframe
+
+head(add_hof, 3)
+
+
+```
+
+
+```{r}
+# Cleaning %.vote column into numerical variable 
+add_hof <- add_hof %>% 
+  mutate(`%.vote` = parse_number(`%.vote`))
+
+# Cleaning X from player names
+add_hof <- add_hof %>% 
+  mutate(Name = gsub("X-", "", Name))
+
+# Adding a yearID column since it is not already there from scraping (prepping for eventual join)
+add_hof <- add_hof %>% 
+  mutate(yearID = 2023)
+
+
+```
+
+
+```{r}
+# Preparing add_hof for joining with People from Lahman set
+add_hof <- add_hof %>% 
+  separate(col=Name, into=c('nameFirst', 'nameLast'), sep=' ') 
+
+#showing the head of add_hof
+
+head(add_hof, 3)
+```
+
+```{r}
+# Adding PlayerID to scraped data
+modPeop <- People %>% 
+  select(nameFirst, nameLast, playerID)
+
+# This join automatically eliminates any players without playerIDs in the Lahman database (removing 4 players)
+add_hof <- inner_join(add_hof, modPeop, by = c("nameFirst", "nameLast"))
+
+#showing the head of add_hof with the eliminations
+head(add_hof)
+```
+
+```{r}
+# adding new data to old HallOfFame from Lahman
+new_hof <- full_join(add_hof, HallOfFame, by = c("playerID", "yearID"))
+
+# ordering the yearID from newest (added 2023 players) to oldest
+new_hof <- new_hof[order(new_hof$yearID, decreasing = TRUE),]
+
+# showing the head of the new joined database
+head(new_hof)
+
+# creating csv
+write.csv(new_hof, file="HallOfFame.csv", row.names = FALSE)
+
+```
+
+
+```{r}
+##Making the plot for the hall of fame data for the year 2023. 
+HallOfFame %>%
+  ggplot(aes (x = yearID, fill = inducted)) + 
+  geom_bar() + 
+  xlim(c(1936, 2022))
+```
+
+From the graph, we can see that we see that the highest number of players inducted into the HOF is around the year 2012 - 2013. 
+
+The next highest years were 1946, 1945, and 1938.
+
+There are several years before 1950 that don't have any data.
+
+We can see that around 1960, there is a much higher number of players included from
+that year than others, and overall the database has many more players from before
+1975 than from after 1975.
+
+
+
+
+
+

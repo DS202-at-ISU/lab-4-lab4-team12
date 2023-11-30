@@ -1,0 +1,18 @@
+---
+title: "progress-report-ShobhitSarkar"
+author: "Shobhit Sarkar"
+date: "2023-11-27"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(Lahman)
+```
+
+Notes and Comments for Lab - 4
+
+Created graph, didn't run into any problems. Will reach out with an email to ask more questions. 
+

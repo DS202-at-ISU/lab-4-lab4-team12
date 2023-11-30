@@ -14,5 +14,32 @@ library(Lahman)
 
 Notes and Comments for Lab - 4
 
-Created graph, didn't run into any problems. Will reach out with an email to ask more questions. 
+Created graph, didn't run into any problems.
+
+Problem : 
+Couldn't run any operations on the dataset because it was a table as opposed to a dataframe. 
+
+Solution: 
+Converted the table to a dataframe
+
+Problem : 
+One of the problems I ran into is that there was an issue with the column names in the dataframe. The columns do not have headers which is leading to empty names. 
+
+Solution : 
+1. I checked the column names and corrected them 
+2. I removed the empty columns 
+3. I then selected the columns by name
+4. Reran the cleaning process
+
+That seemed to solve all the problems. 
+
+Problem : 
+I had some issues combining the dataset. The datasets having the columns with the same name gave some errors. 
+
+Solution : 
+I implemented the solution that was given in the lab manual and that seemed to solve the problem. 
+
+
+
+
 
